@@ -1,30 +1,23 @@
 const binarySearch = function (sortedArray, target) {
-  let arr = sortedArray;
-  while (arr.length !== 0) {
-    console.log(arr);
-    if (getMiddleValue(arr) == target) {
-      // number has been found
-      console.log("match");
-      return getMiddleIndex(arr);
-    } else if (getMiddleValue(arr) < target) {
-      // get second half of array
-      console.log("second half");
-      arr = arr.slice(getMiddleIndex(arr) + 1);
+  let searchStart = 0;
+  let searchEnd = sortedArray.length - 1;
+  let searchMiddle;
+
+  while (searchStart != searchEnd) {
+    searchMiddle = Math.floor((searchStart + searchEnd) / 2);
+    if (target == sortedArray[searchMiddle]) {
+      return searchMiddle;
+    } else if (target > sortedArray[searchMiddle]) {
+      searchStart = searchMiddle + 1;
     } else {
-      //get first half
-      console.log("first half");
-      arr = arr.slice(0, getMiddleIndex(arr));
+      searchEnd = searchMiddle - 1;
     }
   }
-  return -1;
-};
-
-const getMiddleIndex = function (array) {
-  return Math.floor(array.length / 2);
-};
-
-const getMiddleValue = function (array) {
-  return array[getMiddleIndex(array)];
+  if (sortedArray[searchStart] == target) {
+    return searchStart;
+  } else {
+    return -1;
+  }
 };
 
 console.log("Tests:");
